@@ -17,194 +17,166 @@
     "enableAnnotations": true,
     "annotationFormat": "markdown"
   },
-  "warnings": [],
-  "status": "undefined",
-  "processingLocation": "geography",
   "fieldSchema": {
     "fields": {
-      "AgeEligibility": {
+      "ProtocolTitle": {
         "type": "string",
         "method": "extract",
-        "description": "Description of the age range and sex eligibility of participants allowed to enroll in the study. Typically found in the 'Eligibility Criteria', 'Key Inclusion Criteria', or 'Study Population' sections, and may be labeled as 'Age Range', 'Age Limits', or 'Age and Sex Eligibility'. Extract the statement that describes minimum and/or maximum age (for example, 'Adults ≥18 years') and, when present, the permitted sexes (for example, 'Male and Female')."
+        "description": "Full, official title of the clinical trial protocol as written on the cover page or in the study synopsis. Typically appears near the sponsor name and protocol number. May be labeled as 'Protocol Title', 'Full Title', 'Official Title', or 'Study Title'. Extract the complete title text, not an abbreviation."
       },
-      "AmendmentDate": {
+      "ShortTitle": {
+        "type": "string",
+        "method": "extract",
+        "description": "Short or abbreviated title used to refer to the study throughout the document. Often appears in headers, footers, or summary sections and may be labeled as 'Short Title', 'Abbreviated Title', or 'Study Name'. Extract the concise title used in repeated references, even if it differs from the full protocol title."
+      },
+      "ProtocolNumber": {
+        "type": "string",
+        "method": "extract",
+        "description": "Unique identifier assigned to the protocol by the sponsor. Commonly labeled as 'Protocol No.', 'Protocol Number', or 'Study ID' and found on the cover page, headers, or footers next to the study title and sponsor name. Extract the full identifier including letters, numbers, and punctuation (for example, 'ABC-1234-001')."
+      },
+      "DocumentVersionIdentifier": {
+        "type": "string",
+        "method": "extract",
+        "description": "Version identifier or number of the current protocol document, such as 'Version 1.0' or 'Amendment 2'. Typically appears on the cover page, title page, or in document headers and may be labeled as 'Version', 'Protocol Version', 'Amendment Number', or 'Amendment ID'. Extract the complete version label as written."
+      },
+      "DocumentVersionDate": {
         "type": "date",
         "method": "extract",
-        "description": "Date on which the current protocol amendment was issued, finalized, or approved. Typically appears on the cover page, title page, or document header near the amendment number or version number. May be labeled as 'Amendment Date', 'Date of Amendment', 'Effective Date', or presented alongside text such as 'Amendment 2 – 15 March 2024'. Extract only the amendment's date, not protocol version dates or historical amendment dates."
+        "description": "Date associated with the current protocol version or amendment. Usually found on the cover page or near the version identifier and may be labeled as 'Version Date', 'Protocol Date', 'Effective Date', or 'Amendment Date'. Extract the date that corresponds to the active protocol version, not historical or planned dates."
       },
-      "AmendmentNumber": {
+      "SponsorName": {
         "type": "string",
         "method": "extract",
-        "description": "Identifier of the current protocol amendment, if applicable. Typically appears on the cover page or in the document header near the protocol number, version, or version date. May be labeled as 'Amendment No.', 'Amendment Number', 'Protocol Amendment', 'Substantial Amendment', or appear as part of a version reference such as 'Version 3.0 (Amendment 2)'. Extract only the amendment identifier (for example, 'Amendment 2' or 'Amendment 02'), not surrounding version text. If no amendment is specified, leave blank."
+        "description": "Legal or corporate name of the organization serving as the study sponsor. Typically appears on the cover page, 'Sponsor Information' section, or headers and may be labeled as 'Sponsor', 'Study Sponsor', or 'Sponsor/Company'. Extract the full sponsor name without addresses or contact details."
+      },
+      "SponsorAddressLine": {
+        "type": "string",
+        "method": "extract",
+        "description": "Street address line for the sponsor’s primary office or legal address. Usually appears near the sponsor name on the cover page, title page, or in a 'Sponsor Information' section. Extract only the street portion (for example, '123 Main Street, Suite 400') and not the city, state, or postal code."
+      },
+      "SponsorCityStateCountryPostal": {
+        "type": "string",
+        "method": "extract",
+        "description": "City, state/region, country, and postal code corresponding to the sponsor’s address. Often follows the street address in the 'Sponsor' or 'Contact Information' section. May be formatted as 'City, State ZIP, Country' or equivalent international formats. Extract the full location line as written."
+      },
+      "StudyIndication": {
+        "type": "string",
+        "method": "extract",
+        "description": "Disease or condition under study, such as 'metastatic breast cancer' or 'SARS-CoV-2 infection'. Typically appears in the synopsis, background, or 'Study Description' sections and may be labeled as 'Indication', 'Disease Area', 'Condition', or 'Therapeutic Area'. Extract the primary medical condition or population focus in a short phrase."
       },
       "ClinicalTrialsGovId": {
         "type": "string",
         "method": "extract",
         "description": "Registration identifier assigned by ClinicalTrials.gov for the study. Commonly labeled as 'ClinicalTrials.gov Identifier', 'NCT Number', or 'Registry ID' and often appears in the synopsis, administrative, or registry information sections. Format is typically 'NCT' followed by 8 digits (for example, 'NCT01234567'). Extract the full NCT identifier."
       },
-      "DocumentVersionDate": {
-        "type": "date",
-        "method": "extract",
-        "description": "Date of the current protocol version, indicating when this version was finalized, approved, or amended. Usually appears on the cover page or in the document header near the protocol number and version (for example, 'Version 3.0, 15 March 2024'). May be labeled as 'Version Date', 'Protocol Date', or 'Effective Date'. Extract the date associated with the active protocol version, not planned or historical dates."
-      },
-      "ExclusionCriteria": {
+      "StudyPhase": {
         "type": "string",
         "method": "extract",
-        "description": "Block of text listing the conditions that disqualify a participant from enrolling in the study. Typically found in the 'Eligibility Criteria' section under a heading such as 'Exclusion Criteria', 'Key Exclusion Criteria', or 'Main Exclusion Criteria', often following the inclusion criteria. Usually presented as a numbered or bulleted list. Extract the full exclusion criteria text, preserving its list structure where possible."
+        "description": "Phase of clinical development for the study, such as 'Phase 1', 'Phase 2', 'Phase 3', 'Phase 4', or a combined phase (for example, 'Phase 1/2'). Typically appears on the cover page, in the synopsis, or in 'Study Design' sections and may be labeled as 'Study Phase', 'Phase of Development', or 'Clinical Phase'. Extract the phase description exactly as written."
+      },
+      "StudyType": {
+        "type": "string",
+        "method": "extract",
+        "description": "High-level classification of the study, such as 'Interventional', 'Observational', or 'Expanded Access'. Usually appears in the synopsis, 'Study Design', or 'Administrative' sections and may be labeled as 'Study Type' or 'Type of Study'. Extract the descriptor used to classify the overall study design."
+      },
+      "StudyDesignSummary": {
+        "type": "string",
+        "method": "extract",
+        "description": "Narrative summary of the overall study design, including key elements such as randomization, blinding, control groups, number of arms, and main design features. Typically found in the 'Study Design', 'Study Overview', or 'Synopsis' sections and may be labeled as 'Study Design', 'Design Overview', or 'Design Summary'. Extract the paragraph or section that explains how the study is structured, without expanding into detailed procedures or schedules."
+      },
+      "StudyPopulationSummary": {
+        "type": "string",
+        "method": "extract",
+        "description": "High-level description of the target participant population. Often appears in the synopsis, 'Study Population', 'Study Overview', or 'Background and Rationale' sections and may be labeled as 'Study Population', 'Target Population', or 'Patient Population'. Extract text that summarizes key characteristics such as disease or condition, age group, and any defining demographic or clinical features."
+      },
+      "AgeEligibility": {
+        "type": "string",
+        "method": "extract",
+        "description": "Description of the age range of participants eligible to enroll in the study. Typically found in 'Eligibility Criteria', 'Key Inclusion Criteria', or 'Study Population' sections and may be labeled as 'Age Range', 'Age Limits', or 'Age and Sex Eligibility'. Extract the text that states minimum and/or maximum age (for example, 'Adults ≥18 years' or '18 to 65 years')."
       },
       "InclusionCriteria": {
         "type": "string",
         "method": "extract",
-        "description": "Block of text listing the conditions that must be met for a participant to be eligible for the study. Usually appears in the 'Eligibility Criteria' section under a heading such as 'Inclusion Criteria', 'Key Inclusion Criteria', or 'Main Inclusion Criteria'. Often formatted as a numbered or bulleted list. Extract the full inclusion criteria text, preserving its list structure where possible."
+        "description": "Block of text listing conditions that must be met for a participant to be eligible for the study. Usually appears in the 'Eligibility Criteria' section under headings such as 'Inclusion Criteria', 'Key Inclusion Criteria', or 'Main Inclusion Criteria'. Often formatted as a numbered or bulleted list. Extract the full inclusion criteria text, preserving list structure where possible."
       },
-      "PrimaryEndpoints": {
+      "ExclusionCriteria": {
         "type": "string",
         "method": "extract",
-        "description": "Description of the primary outcome measures used to assess the primary objectives of the study. Typically located in the 'Objectives and Endpoints', 'Outcome Measures', or 'Efficacy/Safety Endpoints' sections under a heading such as 'Primary Endpoints' or 'Primary Efficacy Endpoints'. Extract the complete definition of the primary endpoints, including the variable being measured, method of assessment, and timepoints when available."
+        "description": "Block of text listing conditions that disqualify a participant from enrolling in the study. Typically found in the 'Eligibility Criteria' section under headings such as 'Exclusion Criteria', 'Key Exclusion Criteria', or 'Main Exclusion Criteria', often following the inclusion criteria. Usually presented as a numbered or bulleted list. Extract the full exclusion criteria text, preserving list structure where possible."
       },
       "PrimaryObjectives": {
         "type": "string",
         "method": "extract",
-        "description": "Text describing the main goals of the study, usually focusing on efficacy, safety, or tolerability of the investigational product. Commonly found in the 'Objectives and Endpoints', 'Study Objectives', or 'Synopsis' sections under a heading such as 'Primary Objective' or 'Primary Objectives'. Extract the statement(s) that specify what the study is primarily designed to evaluate, not secondary or exploratory objectives."
+        "description": "Text describing the main goals of the study, usually focused on efficacy, safety, or tolerability of the investigational product. Commonly found in 'Objectives and Endpoints', 'Study Objectives', or 'Synopsis' sections under a heading such as 'Primary Objective' or 'Primary Objectives'. Extract the statement or list of statements that specify what the study is primarily designed to evaluate."
       },
-      "ProtocolNumber": {
+      "SecondaryObjectives": {
         "type": "string",
         "method": "extract",
-        "description": "Unique identifier assigned to the protocol by the sponsor for tracking and regulatory reference. Commonly labeled as 'Protocol No.', 'Protocol Number', or 'Study ID' and found on the cover page, headers, or footers next to the study title and sponsor name. Extract the full identifier including letters, numbers, and punctuation (for example, 'ABC-1234-001')."
+        "description": "Text describing secondary goals of the study, often related to additional efficacy, safety, pharmacokinetics, or exploratory outcomes. Typically located in 'Objectives and Endpoints', 'Study Objectives', or 'Synopsis' sections under a heading such as 'Secondary Objectives'. Extract the statement or list of statements labeled as secondary objectives, separate from primary objectives."
       },
-      "ProtocolTitle": {
+      "PrimaryEndpoints": {
         "type": "string",
         "method": "extract",
-        "description": "Full, official title of the clinical trial protocol as written on the cover page or in the study synopsis. Typically appears near the sponsor name and protocol number at the top of the first pages. May be labeled as 'Protocol Title', 'Full Title', 'Official Title', or 'Study Title'. Extract the complete title text, not an abbreviation."
+        "description": "Description of the primary outcome measures used to assess the primary objectives of the study. Typically found in 'Objectives and Endpoints', 'Outcome Measures', or 'Efficacy/Safety Endpoints' sections under a heading such as 'Primary Endpoints' or 'Primary Efficacy Endpoints'. Extract the definition of each primary endpoint, including the variable measured, method of assessment, and key timepoints when provided."
       },
-      "ScheduleOfAssessments": {
-        "type": "array",
-        "method": "extract",
-        "description": "Structured, visit-by-visit breakdown of all assessments, procedures, and evaluations scheduled throughout the clinical trial. Typically found in sections labeled as 'Schedule of Assessments', 'Schedule of Activities', 'Study Procedures Schedule', 'Visit Schedule', 'Time and Events Schedule', or 'Study Calendar'. May appear as a comprehensive table in the main protocol body, in dedicated appendix sections, or as modular schedules for different cohorts or treatment arms. Each array item represents a distinct visit, visit window, or timepoint where assessments occur. Extract all visits from both standard protocol tables and any modular or fragmented appendix sections that contain assessment schedules.",
-        "items": {
-          "type": "object",
-          "properties": {
-            "cohort_module_name": {
-              "type": "string",
-              "method": "generate",
-              "description": "Identifier for the cohort, module, appendix, or treatment arm to which this assessment schedule belongs. Typically found in table headers, section titles, or column labels in modular protocol designs. May be labeled as 'Cohort', 'Module', 'Appendix', 'Arm', 'Treatment Group', or 'Study Population'. Common examples include 'Core Protocol', 'Arm A', or 'Cohort 1'. For single-cohort or non-modular studies where all assessments apply universally, use 'General' or 'Core Protocol'. Extract the specific identifier that distinguishes this schedule from others in the document."
-            },
-            "visit_identifier": {
-              "type": "string",
-              "method": "extract",
-              "description": "Name, label, or number identifying the specific visit or timepoint. Typically appears in the first column or row header of schedule tables and may be labeled as 'Visit', 'Visit Number', 'Timepoint', 'Study Day', or 'Cycle/Visit'. Common formats include 'Visit 1', 'Screening', 'Baseline', 'Cycle 2 Day 1', 'End of Treatment', 'Follow-up Visit 1', or 'Week 4'. Extract the exact visit identifier as it appears in the schedule table, including any prefixes, suffixes, or numbering schemes used in the document."
-            },
-            "visit_timing": {
-              "type": "string",
-              "method": "extract",
-              "description": "Specific timing, schedule window, or relative time frame for when the visit occurs. Typically found in schedule tables under columns labeled as 'Timing', 'Schedule', 'Window', 'Study Day', 'Days', or 'Timeframe'. May be expressed as absolute days (for example, 'Day 1', 'Day 28'), relative windows (for example, 'Days -28 to 0', 'Days 1-7'), or event-based timing (for example, 'Within 7 days of progression', 'Prior to first dose', 'At screening'). Extract the complete timing specification including any ranges, windows, or conditional timing statements that define when the visit should occur."
-            },
-            "procedures_list": {
-              "type": "array",
-              "method": "generate",
-              "description": "Complete list of all medical procedures, assessments, evaluations, or activities scheduled to occur at this specific visit or timepoint. Typically found in schedule tables where each row represents a procedure and columns indicate which visits include that procedure, or where each column represents a visit and rows list the procedures. May also be found in narrative visit descriptions. Extract all procedures, tests, assessments, and activities that are scheduled for this visit, including those marked with checkmarks, symbols, or other indicators in table formats.",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "procedure_name": {
-                    "type": "string",
-                    "method": "generate",
-                    "description": "Short label (3-15 words) summarizing the clinical procedure, test, assessment, or activity being performed. Generate a concise, standardized name that captures the essential procedure without including full instructions, rationale, or multi-sentence descriptions. Typically found in schedule table rows or columns and may be labeled with standard clinical trial terminology. Common examples include 'Informed consent', 'Randomization in IRT', 'Urine pregnancy test', 'Vital signs', 'Immunogenicity blood draw', 'Medical history', 'Physical examination', 'ECG', 'Tumor biopsy', 'CT scan', 'Adverse event assessment', 'Concomitant medications', or 'Study drug administration'. Do not include full instructions, rationale, or multi-sentence descriptions; keep those in conditional_notes. Use standard abbreviations when appropriate (for example, 'ECG', 'PK sampling', 'PD markers')."
-                  },
-                  "conditional_notes": {
-                    "type": "string",
-                    "method": "extract",
-                    "description": "Full contextual instructions, conditions, and narrative descriptions associated with this procedure. Extract complete text including timing specifications (for example, 'on Day 1 prior to vaccination', 'Within 2 hours of administration'), triggers or conditions (for example, 'if temperature ≥39°C', 'If clinically indicated', 'As per investigator discretion'), patient subpopulations (for example, 'Only for WOCBP', 'For patients with measurable disease'), sample collection details (for example, 'Collect 20mL', 'Fasting required'), frequency specifications (for example, 'Every 2 cycles', 'At progression only'), cross-references (for example, 'see Section 8.3.4'), or any other procedural details, rationale, or multi-sentence descriptions. Typically found in table footnotes, superscript symbols (for example, *, †, ‡), parenthetical text, or dedicated 'Notes' columns in schedule tables. Multi-sentence text is acceptable. Extract all conditional notes, footnotes, and special instructions that modify when, how, or for whom the procedure should be performed."
-                  },
-                  "category": {
-                    "type": "string",
-                    "method": "generate",
-                    "enum": [
-                      "Administrative",
-                      "Safety",
-                      "Laboratory",
-                      "Efficacy",
-                      "Imaging",
-                      "PK/PD",
-                      "Other"
-                    ],
-                    "description": "Classification of the procedure type based on its purpose and the data it generates. Use one of: Administrative, Safety, Laboratory, Efficacy, Imaging, PK/PD, or Other. Infer from context and procedure name. Administrative procedures include study management activities such as 'Informed consent' → Administrative, 'Randomization in IRT' → Administrative, 'Study drug dispensing' → Administrative, or 'Visit scheduling' → Administrative. Safety procedures monitor patient safety such as 'Record AEs' → Safety, 'Vital signs' → Safety, 'Physical examination' → Safety, 'ECG' → Safety, or 'Adverse event assessment' → Safety. Laboratory procedures include sample collection and analysis such as 'blood sample for immunogenicity' → Laboratory, 'Hematology' → Laboratory, 'Chemistry' → Laboratory, 'Serology' → Laboratory, 'Urine pregnancy test' → Laboratory, or 'Biomarker analysis' → Laboratory. Efficacy procedures measure treatment effectiveness such as 'Tumor assessment' → Efficacy, 'Response evaluation' → Efficacy, 'Disease progression' → Efficacy, or 'Efficacy endpoints' → Efficacy. Imaging procedures include diagnostic imaging such as 'CT scan' → Imaging, 'MRI' → Imaging, 'PET scan' → Imaging, or 'X-ray' → Imaging. PK/PD procedures relate to pharmacokinetics and pharmacodynamics such as 'PK sampling' → PK/PD, 'Pharmacokinetic analysis' → PK/PD, 'Biomarker sampling' → PK/PD, or 'PD markers' → PK/PD. Use 'Other' for procedures that do not clearly fit the above categories. Classify based on the primary purpose of the procedure when inferable from context."
-                  }
-                },
-                "method": "generate"
-              }
-            }
-          },
-          "method": "generate",
-          "description": "Single visit entry representing one distinct visit, timepoint, or visit window in the assessment schedule. Contains the cohort or module identifier that groups this visit, the visit identifier and timing information, and a complete list of all procedures, assessments, and activities scheduled for that visit along with any conditional notes or special instructions associated with each procedure."
-        }
-      },
-      "SponsorCityStateZip": {
+      "SecondaryEndpoints": {
         "type": "string",
         "method": "extract",
-        "description": "City, state/region, and postal code corresponding to the sponsor's legal address. Often follows the street address in the 'Sponsor' or 'Contact Information' section. May be formatted as 'City, State ZIP' (for example, 'New York, NY 10065') or international equivalents. Extract the location line without the country name unless it is part of the same line."
+        "description": "Description of secondary outcome measures used to assess secondary objectives. Usually located in 'Objectives and Endpoints', 'Outcome Measures', or 'Efficacy/Safety Endpoints' sections under a heading such as 'Secondary Endpoints' or 'Secondary Outcome Measures'. Extract the descriptions of secondary endpoints as written, separate from primary endpoints."
       },
-      "SponsorName": {
-        "type": "string",
+      "TotalPlannedEnrollment": {
+        "type": "integer",
         "method": "extract",
-        "description": "Legal or corporate name of the organization serving as the study sponsor. Typically appears on the cover page, 'Sponsor Information' section, or headers and may be labeled as 'Sponsor', 'Study Sponsor', or 'Sponsor/Company'. Extract the full sponsor name (for example, 'Memorial Sloan Kettering Cancer Center' or a pharmaceutical company name) without including addresses or contact details.",
-        "estimateSourceAndConfidence": true
-      },
-      "SponsorStreetAddress": {
-        "type": "string",
-        "method": "extract",
-        "description": "Street address line of the study sponsor's primary legal or corporate office. Usually appears on the cover page, title page, or 'Sponsor Information' section near the sponsor name and contact details. Extract only the street portion (for example, '123 Main Street, Suite 400') and not the city, state, or postal code."
+        "description": "Total number of participants planned for enrollment in the study across all sites and arms. Commonly labeled as 'Planned Enrollment', 'Target Sample Size', 'Total Number of Subjects', or 'Number of Participants' and appears in the synopsis, 'Study Design', or 'Sample Size' sections. Extract the numeric value for overall planned enrollment, not per-site or per-arm counts."
       },
       "StudyArms": {
         "type": "array",
+        "method": "generate",
+        "description": "Collection of study arms or treatment groups defined in the protocol. Each item represents a distinct arm with its label and main intervention description. Arms are typically described in 'Study Design', 'Treatment Arms', 'Interventions', or 'Study Groups' sections.",
         "items": {
           "type": "object",
           "properties": {
-            "ArmTitle": {
+            "ArmLabel": {
               "type": "string",
               "method": "extract",
-              "description": "Name or label of the study arm, treatment group, or cohort. Usually found in the 'Study Design', 'Treatment Arms', or 'Intervention' sections and may be labeled as 'Arm', 'Cohort', 'Group', or 'Treatment Regimen'. Examples include 'Arm A: Investigational Drug + Standard of Care' or 'Placebo Control Arm'. Extract the full title of each arm."
+              "description": "Name or label of the study arm, such as 'Arm A: Investigational Drug', 'Placebo Arm', or 'Standard of Care'. Usually appears in 'Study Design', 'Treatment Arms', or 'Interventions' sections and may be labeled as 'Arm', 'Group', 'Cohort', or 'Treatment Regimen'. Extract the full text label for the arm."
             },
-            "ArmDescription": {
+            "ArmType": {
               "type": "string",
               "method": "extract",
-              "description": "Detailed description of the interventions, dosing regimen, and key characteristics for the corresponding study arm. Typically appears under arm-specific headings in the 'Study Design', 'Treatment Plan', or 'Interventions' sections. May include drug name(s), dose, route of administration, frequency, treatment duration, and comparator details. Extract the full descriptive text associated with each arm."
+              "description": "High-level classification of the arm such as 'Experimental', 'Active Comparator', 'Placebo', or 'Standard of Care'. This may be stated directly next to the arm label or in the intervention description. Extract the descriptive term that characterizes the role of the arm in the study."
+            },
+            "ArmInterventionSummary": {
+              "type": "string",
+              "method": "extract",
+              "description": "Summary of the intervention for the arm, including investigational product name(s), dose, route, frequency, and key treatment features. Typically found under arm-specific headings in 'Interventions', 'Study Treatment', or 'Study Design' sections. Extract the narrative that describes what participants in this arm receive."
             }
-          },
-          "method": "generate"
-        },
-        "method": "generate",
-        "description": "Collection of all study arms, cohorts, or treatment groups defined in the protocol. Each item includes an arm title and arm description as specified in the 'Study Design', 'Treatment Arms', or 'Interventions' sections. Extract one entry per distinct arm or cohort."
+          }
+        }
       },
-      "StudyDesign": {
+      "ScheduleOfAssessmentsTables": {
+        "type": "array",
+        "method": "extract",
+        "description": "All Schedule of Assessments (SoA) or Study Visit Matrix tables that describe visits and procedures over time. Typically found in sections titled 'Schedule of Assessments', 'Schedule of Activities', 'Study Procedures', 'Visit Schedule', or in appendices. These tables may span multiple pages and include screening, treatment, and follow-up schedules. Extract each SoA-related table as HTML while preserving rows, columns, headers, and footnotes.",
+        "items": {
+          "type": "string",
+          "description": "HTML representation of a single Schedule of Assessments or visit schedule table, including header rows, body rows, and any footnotes that appear under the table."
+        }
+      },
+      "ScheduleOfAssessmentsSectionText": {
         "type": "string",
         "method": "extract",
-        "description": "Narrative description of the overall study design, including elements such as randomization, blinding, control groups, number of arms, and major design features. Typically located in the 'Study Design', 'Study Overview', or 'Synopsis' sections and may be labeled as 'Study Design', 'Design Overview', or 'Design Summary'. Extract the paragraph or section that explains how the study is structured rather than detailed procedures or schedules."
+        "description": "Full text of the main Schedule of Assessments section, including headings, table captions, legends, footnotes, and any narrative paragraphs that explain visit timing, windows, conditional procedures, or unscheduled visits. Look for sections titled 'Schedule of Assessments', 'Schedule of Activities', 'Study Procedures', 'Visit Schedule', or similar. Extract continuous text that provides context around the SoA tables."
       },
-      "StudyPhase": {
+      "UnscheduledVisitNarrative": {
         "type": "string",
         "method": "extract",
-        "description": "Phase of clinical development represented by the study, such as Phase I, Phase II, Phase III, or Phase IV, including combined phases (for example, 'Phase 1/2'). Typically appears on the cover page, synopsis, or in the 'Study Design' or 'Study Overview' sections and may be labeled as 'Study Phase', 'Phase of Development', or 'Clinical Phase'. Extract the phase description exactly as written."
+        "description": "Narrative description of unscheduled visits or additional visits triggered by adverse events, clinical findings, or investigator judgment. Typically located near the Schedule of Assessments, safety, or visit description sections and may be labeled as 'Unscheduled Visits', 'Unscheduled Assessments', or appear in notes such as 'if clinically indicated'. Extract the text that explains when and why unscheduled visits occur and what is performed at those visits."
       },
-      "StudyPopulationDescription": {
+      "ConditionalOrOptionalProceduresNarrative": {
         "type": "string",
         "method": "extract",
-        "description": "High-level narrative describing the target participant population for the study. Often found in the 'Study Population', 'Study Overview', 'Synopsis', or 'Background and Rationale' sections. May be labeled as 'Target Population', 'Study Population', or 'Patient Population'. Extract the text that summarizes key characteristics such as disease or condition, age group, and other defining features of the participants."
-      },
-      "StudyTitle": {
-        "type": "string",
-        "method": "extract",
-        "description": "The main study title as it appears in protocol headers, footers, or metadata sections. Often matches the 'Protocol Title' or may be a shortened or formatted version labeled as 'Study Title', 'Short Title', or 'Abbreviated Title'. Extract the primary title text used to identify the study throughout the document, even if it differs slightly from the full cover-page title."
-      },
-      "TotalParticipantCount": {
-        "type": "integer",
-        "method": "extract",
-        "description": "Total number of participants planned for enrollment in the study across all sites and arms. Commonly labeled as 'Planned Enrollment', 'Target Sample Size', 'Total Number of Subjects', or 'Number of Participants'. Typically appears in the synopsis, 'Study Design', or 'Sample Size' sections. Extract the numeric value representing the overall planned enrollment, not per-site or per-arm counts."
-      },
-      "USINDNumber": {
-        "type": "string",
-        "method": "extract",
-        "description": "United States Investigational New Drug (IND) application number associated with the investigational product, if applicable. Frequently labeled as 'US IND', 'IND No.', 'IND Number', or 'IND #', and found in the regulatory, administrative, or cover page sections. Format is typically a numeric identifier (for example, 'IND 123456'). If multiple INDs are listed, extract the one that corresponds to the primary study drug."
+        "description": "Text describing procedures that are performed only under certain conditions, are optional, or apply to specific subgroups (for example, 'if clinically indicated', 'for WOCBP only', 'optional biopsy', or 'performed in case of suspected toxicity'). Look for these statements in Schedule of Assessments footnotes, safety sections, or procedure descriptions. Extract the narrative that explains the conditions or optional nature of these procedures."
       }
     },
     "definitions": {}
