@@ -80,41 +80,41 @@
       "ScheduleOfAssessments": {
         "type": "array",
         "method": "extract",
-        "description": "A structured, visit-by-visit breakdown of all assessments, designed to capture data from both standard tables and modular/fragmented appendix sections. Each item represents a distinct visit or visit group.",
+        "description": "Structured, visit-by-visit breakdown of all assessments, procedures, and evaluations scheduled throughout the clinical trial. Typically found in sections labeled as 'Schedule of Assessments', 'Schedule of Activities', 'Study Procedures Schedule', 'Visit Schedule', 'Time and Events Schedule', or 'Study Calendar'. May appear as a comprehensive table in the main protocol body, in dedicated appendix sections, or as modular schedules for different cohorts or treatment arms. Each array item represents a distinct visit, visit window, or timepoint where assessments occur. Extract all visits from both standard protocol tables and any modular or fragmented appendix sections that contain assessment schedules.",
         "items": {
           "type": "object",
           "properties": {
             "cohort_module_name": {
               "type": "string",
               "method": "generate",
-              "description": "Identify which cohort, module, or appendix this assessment belongs to (e.g., 'Core Protocol', 'Module 1 SCLC', 'Module 6 Ovarian Triplet'). For single-cohort studies, use 'General'."
+              "description": "Identifier for the cohort, module, appendix, or treatment arm to which this assessment schedule belongs. Typically found in table headers, section titles, or column labels in modular protocol designs. May be labeled as 'Cohort', 'Module', 'Appendix', 'Arm', 'Treatment Group', or 'Study Population'. Common examples include 'Core Protocol', 'Arm A', or 'Cohort 1'. For single-cohort or non-modular studies where all assessments apply universally, use 'General' or 'Core Protocol'. Extract the specific identifier that distinguishes this schedule from others in the document."
             },
             "visit_identifier": {
               "type": "string",
               "method": "extract",
-              "description": "The name or number of the visit (e.g., 'Visit 1', 'Screening', 'Cycle 2 Day 1')."
+              "description": "Name, label, or number identifying the specific visit or timepoint. Typically appears in the first column or row header of schedule tables and may be labeled as 'Visit', 'Visit Number', 'Timepoint', 'Study Day', or 'Cycle/Visit'. Common formats include 'Visit 1', 'Screening', 'Baseline', 'Cycle 2 Day 1', 'End of Treatment', 'Follow-up Visit 1', or 'Week 4'. Extract the exact visit identifier as it appears in the schedule table, including any prefixes, suffixes, or numbering schemes used in the document."
             },
             "visit_timing": {
               "type": "string",
               "method": "extract",
-              "description": "The specific timing or window for the visit (e.g., 'Day 1', 'Days -28 to 0', 'Within 7 days of progression')."
+              "description": "Specific timing, schedule window, or relative time frame for when the visit occurs. Typically found in schedule tables under columns labeled as 'Timing', 'Schedule', 'Window', 'Study Day', 'Days', or 'Timeframe'. May be expressed as absolute days (for example, 'Day 1', 'Day 28'), relative windows (for example, 'Days -28 to 0', 'Days 1-7'), or event-based timing (for example, 'Within 7 days of progression', 'Prior to first dose', 'At screening'). Extract the complete timing specification including any ranges, windows, or conditional timing statements that define when the visit should occur."
             },
             "procedures_list": {
               "type": "array",
               "method": "generate",
-              "description": "The list of medical procedures or assessments occurring at this specific visit time.",
+              "description": "Complete list of all medical procedures, assessments, evaluations, or activities scheduled to occur at this specific visit or timepoint. Typically found in schedule tables where each row represents a procedure and columns indicate which visits include that procedure, or where each column represents a visit and rows list the procedures. May also be found in narrative visit descriptions. Extract all procedures, tests, assessments, and activities that are scheduled for this visit, including those marked with checkmarks, symbols, or other indicators in table formats.",
               "items": {
                 "type": "object",
                 "properties": {
                   "procedure_name": {
                     "type": "string",
                     "method": "extract",
-                    "description": "The name of the test or assessment (e.g., 'Informed Consent', 'Vital Signs', 'Tumor Biopsy')."
+                    "description": "Name of the medical procedure, test, assessment, or activity being performed. Typically found in schedule table rows or columns and may be labeled with standard clinical trial terminology. Common examples include 'Informed Consent', 'Medical History', 'Physical Examination', 'Vital Signs', 'ECG', 'Laboratory Tests', 'Tumor Biopsy', 'CT Scan', 'Adverse Event Assessment', 'Concomitant Medications', or 'Study Drug Administration'. Extract the full procedure name as it appears in the schedule, including any abbreviations that are standard in clinical trial documentation (for example, 'ECG', 'PK sampling', 'PD markers')."
                   },
                   "conditional_notes": {
                     "type": "string",
                     "method": "extract",
-                    "description": "Contextual constraints found in footnotes, text, or table symbols (e.g., 'Only for WOCBP', 'If clinically indicated', 'Prior to dosing', 'Collect 20mL')."
+                    "description": "Contextual constraints, conditions, or special instructions associated with the procedure. Typically found in table footnotes, superscript symbols (for example, *, †, ‡), parenthetical text, or dedicated 'Notes' columns in schedule tables. May specify patient subpopulations (for example, 'Only for WOCBP', 'For patients with measurable disease'), clinical conditions (for example, 'If clinically indicated', 'As per investigator discretion'), timing requirements (for example, 'Prior to dosing', 'Within 2 hours of administration'), sample collection details (for example, 'Collect 20mL', 'Fasting required'), or frequency specifications (for example, 'Every 2 cycles', 'At progression only'). Extract all conditional notes, footnotes, and special instructions that modify when, how, or for whom the procedure should be performed."
                   },
                   "category": {
                     "type": "string",
@@ -126,7 +126,7 @@
                       "Laboratory",
                       "PK/PD"
                     ],
-                    "description": "Classify the procedure type if inferable from the procedure name or context."
+                    "description": "Classification of the procedure type based on its purpose and the data it generates. Infer the category from the procedure name, context within the schedule, or standard clinical trial procedure groupings. Safety procedures include assessments that monitor patient safety such as 'Adverse Events', 'Vital Signs', 'Physical Examination', 'ECG', or 'Safety Laboratory Tests'. Efficacy procedures measure treatment effectiveness such as 'Tumor Assessment', 'Response Evaluation', 'Disease Progression', or 'Efficacy Endpoints'. Administrative procedures include study management activities such as 'Informed Consent', 'Randomization', 'Study Drug Dispensing', or 'Visit Scheduling'. Laboratory procedures include sample collection and analysis such as 'Hematology', 'Chemistry', 'Serology', or 'Biomarker Analysis'. PK/PD procedures relate to pharmacokinetics and pharmacodynamics such as 'PK Sampling', 'Pharmacokinetic Analysis', 'Biomarker Sampling', or 'PD Markers'. Classify based on the primary purpose of the procedure when inferable from context."
                   }
                 },
                 "method": "generate"
@@ -134,7 +134,7 @@
             }
           },
           "method": "generate",
-          "description": "A single visit entry containing a cohort identifier, visit timing, and a list of all associated procedures and their conditional notes."
+          "description": "Single visit entry representing one distinct visit, timepoint, or visit window in the assessment schedule. Contains the cohort or module identifier that groups this visit, the visit identifier and timing information, and a complete list of all procedures, assessments, and activities scheduled for that visit along with any conditional notes or special instructions associated with each procedure."
         }
       },
       "SponsorCityStateZip": {
