@@ -80,28 +80,61 @@
       "ScheduleOfAssessments": {
         "type": "array",
         "method": "extract",
-        "description": "All representations of the Schedule of Assessments (SOA) or Study Visit Matrix, including tables, diagrams that are converted to text, or narrative descriptions that define visit-level procedures and timepoints. Typically located in sections titled 'Schedule of Assessments', 'Schedule of Activities', 'Study Procedures', 'Visit Schedule', or similar. If multiple tables or narrative sections exist (for example Screening, Treatment, and Follow-up schedules), return one array item per distinct schedule representation in the order they appear in the protocol.",
+        "description": "A structured, visit-by-visit breakdown of all assessments, designed to capture data from both standard tables (like Pfizer-1) and modular/fragmented appendix sections (like Astra-1). Each item represents a distinct visit or visit group.",
         "items": {
           "type": "object",
           "properties": {
-            "RepresentationType": {
+            "cohort_module_name": {
               "type": "string",
               "method": "generate",
-              "description": "A short label describing the type of SOA representation. Use values such as 'table', 'text', or 'mixed'. Choose 'table' when the schedule is primarily presented as a structured grid, 'text' when it is primarily a narrative or bullet list, and 'mixed' when a table is closely tied to an explanatory text block that should be treated together."
+              "description": "Identify which cohort, module, or appendix this assessment belongs to (e.g., 'Core Protocol', 'Module 1 SCLC', 'Module 6 Ovarian Triplet'). For single-cohort studies, use 'General'."
             },
-            "Label": {
-              "type": "string",
-              "method": "generate",
-              "description": "Human-readable label for this schedule, based on the surrounding heading or caption. Examples include 'Overall Schedule of Assessments', 'Screening and Baseline', 'Treatment Period', 'Follow-up Visits', or 'Long-Term Follow-up'. If no explicit heading exists, generate a concise descriptive label based on the content."
-            },
-            "Content": {
+            "visit_identifier": {
               "type": "string",
               "method": "extract",
-              "description": "The full content of this schedule representation. When the SOA is presented as a table, extract the complete table as HTML, preserving headers, rows, columns, and merged cells where possible. When the SOA is presented as narrative text or bullet lists, extract the full text block describing visit-level procedures and timepoints. When 'mixed', include both table HTML and any immediately related explanatory text in a single combined string."
+              "description": "The name or number of the visit (e.g., 'Visit 1', 'Screening', 'Cycle 2 Day 1')."
+            },
+            "visit_timing": {
+              "type": "string",
+              "method": "extract",
+              "description": "The specific timing or window for the visit (e.g., 'Day 1', 'Days -28 to 0', 'Within 7 days of progression')."
+            },
+            "procedures_list": {
+              "type": "array",
+              "method": "generate",
+              "description": "The list of medical procedures or assessments occurring at this specific visit time.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "procedure_name": {
+                    "type": "string",
+                    "method": "extract",
+                    "description": "The name of the test or assessment (e.g., 'Informed Consent', 'Vital Signs', 'Tumor Biopsy')."
+                  },
+                  "conditional_notes": {
+                    "type": "string",
+                    "method": "extract",
+                    "description": "Contextual constraints found in footnotes, text, or table symbols (e.g., 'Only for WOCBP', 'If clinically indicated', 'Prior to dosing', 'Collect 20mL')."
+                  },
+                  "category": {
+                    "type": "string",
+                    "method": "generate",
+                    "enum": [
+                      "Safety",
+                      "Efficacy",
+                      "Administrative",
+                      "Laboratory",
+                      "PK/PD"
+                    ],
+                    "description": "Classify the procedure type if inferable from the procedure name or context."
+                  }
+                },
+                "method": "generate"
+              }
             }
           },
           "method": "generate",
-          "description": "One extracted Schedule of Assessments representation, including its type, label, and full content as HTML table, narrative text, or a combination of both."
+          "description": "A single visit entry containing a cohort identifier, visit timing, and a list of all associated procedures and their conditional notes."
         }
       },
       "SponsorCityStateZip": {
@@ -139,7 +172,7 @@
           "method": "generate"
         },
         "method": "generate",
-        "description": "Collection of all study arms, cohorts, or treatment groups defined in the protocol. Each item includes an arm title and arm description as specified in the 'Study Design', 'Treatment Arms', or 'Intervention' sections. Extract one entry per distinct arm or cohort."
+        "description": "Collection of all study arms, cohorts, or treatment groups defined in the protocol. Each item includes an arm title and arm description as specified in the 'Study Design', 'Treatment Arms', or 'Interventions' sections. Extract one entry per distinct arm or cohort."
       },
       "StudyDesign": {
         "type": "string",
