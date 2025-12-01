@@ -1,0 +1,147 @@
+{
+  "baseAnalyzerId": "prebuilt-document",
+  "config": {
+    "returnDetails": true,
+    "enableOcr": true,
+    "enableLayout": true,
+    "enableFormula": true,
+    "enableFigureDescription": true,
+    "enableFigureAnalysis": true,
+    "chartFormat": "chartjs",
+    "disableContentFiltering": true,
+    "tableFormat": "html",
+    "estimateFieldSourceAndConfidence": true,
+    "enableSegment": false,
+    "omitContent": false,
+    "segmentPerPage": false,
+    "enableAnnotations": true,
+    "annotationFormat": "markdown"
+  },
+  "warnings": [],
+  "status": "undefined",
+  "processingLocation": "geography",
+  "fieldSchema": {
+    "fields": {
+      "ProtocolTitle": {
+        "type": "string",
+        "method": "extract",
+        "description": "Full, official title of the clinical trial protocol as written on the cover page or in the study synopsis. Typically appears near the sponsor name and protocol number at the top of the first pages. May be labeled as 'Protocol Title', 'Full Title', 'Official Title', or 'Study Title'. Extract the complete title text, not an abbreviation."
+      },
+      "ProtocolNumber": {
+        "type": "string",
+        "method": "extract",
+        "description": "Unique identifier assigned to the protocol by the sponsor for tracking and regulatory reference. Commonly labeled as 'Protocol No.', 'Protocol Number', or 'Study ID' and found on the cover page, headers, or footers next to the study title and sponsor name. Extract the full identifier including letters, numbers, and punctuation (for example, 'ABC-1234-001')."
+      },
+      "SponsorStreetAddress": {
+        "type": "string",
+        "method": "extract",
+        "description": "Street address line of the study sponsor’s primary legal or corporate office. Usually appears on the cover page, title page, or 'Sponsor Information' section near the sponsor name and contact details. Extract only the street portion (for example, '123 Main Street, Suite 400') and not the city, state, or postal code."
+      },
+      "SponsorCityStateZip": {
+        "type": "string",
+        "method": "extract",
+        "description": "City, state/region, and postal code corresponding to the sponsor’s legal address. Often follows the street address in the 'Sponsor' or 'Contact Information' section. May be formatted as 'City, State ZIP' (for example, 'New York, NY 10065') or international equivalents. Extract the location line without the country name unless it is part of the same line."
+      },
+      "USINDNumber": {
+        "type": "string",
+        "method": "extract",
+        "description": "United States Investigational New Drug (IND) application number associated with the investigational product, if applicable. Frequently labeled as 'US IND', 'IND No.', 'IND Number', or 'IND #', and found in the regulatory, administrative, or cover page sections. Format is typically a numeric identifier (for example, 'IND 123456'). If multiple INDs are listed, extract the one that corresponds to the primary study drug."
+      },
+      "ClinicalTrialsGovId": {
+        "type": "string",
+        "method": "extract",
+        "description": "Registration identifier assigned by ClinicalTrials.gov for the study. Commonly labeled as 'ClinicalTrials.gov Identifier', 'NCT Number', or 'Registry ID' and often appears in the synopsis, administrative, or registry information sections. Format is typically 'NCT' followed by 8 digits (for example, 'NCT01234567'). Extract the full NCT identifier."
+      },
+      "DocumentVersionDate": {
+        "type": "date",
+        "method": "extract",
+        "description": "Date of the current protocol version, indicating when this version was finalized, approved, or amended. Usually appears on the cover page or in the document header near the protocol number and version (for example, 'Version 3.0, 15 March 2024'). May be labeled as 'Version Date', 'Protocol Date', or 'Effective Date'. Extract the date associated with the active protocol version, not planned or historical dates."
+      },
+
+      "AmendmentNumber": {
+        "type": "string",
+        "method": "extract",
+        "description": "Identifier of the current protocol amendment, if applicable. Typically appears on the cover page or in the document header near the protocol number, version, or version date. May be labeled as 'Amendment No.', 'Amendment Number', 'Protocol Amendment', 'Substantial Amendment', or appear as part of a version reference such as 'Version 3.0 (Amendment 2)'. Extract only the amendment identifier (for example, 'Amendment 2' or 'Amendment 02'), not surrounding version text. If no amendment is specified, leave blank."
+      },
+
+      "AgeEligibility": {
+        "type": "string",
+        "method": "extract",
+        "description": "Description of the age range and sex eligibility of participants allowed to enroll in the study. Typically found in the 'Eligibility Criteria', 'Key Inclusion Criteria', or 'Study Population' sections, and may be labeled as 'Age Range', 'Age Limits', or 'Age and Sex Eligibility'. Extract the statement that describes minimum and/or maximum age (for example, 'Adults ≥18 years') and, when present, the permitted sexes (for example, 'Male and Female')."
+      },
+      "InclusionCriteria": {
+        "type": "string",
+        "method": "extract",
+        "description": "Block of text listing the conditions that must be met for a participant to be eligible for the study. Usually appears in the 'Eligibility Criteria' section under a heading such as 'Inclusion Criteria', 'Key Inclusion Criteria', or 'Main Inclusion Criteria'. Often formatted as a numbered or bulleted list. Extract the full inclusion criteria text, preserving its list structure where possible."
+      },
+      "ExclusionCriteria": {
+        "type": "string",
+        "method": "extract",
+        "description": "Block of text listing the conditions that disqualify a participant from enrolling in the study. Typically found in the 'Eligibility Criteria' section under a heading such as 'Exclusion Criteria', 'Key Exclusion Criteria', or 'Main Exclusion Criteria', often following the inclusion criteria. Usually presented as a numbered or bulleted list. Extract the full exclusion criteria text, preserving its list structure where possible."
+      },
+      "StudyDesign": {
+        "type": "string",
+        "method": "extract",
+        "description": "Narrative description of the overall study design, including elements such as randomization, blinding, control groups, number of arms, and major design features. Typically located in the 'Study Design', 'Study Overview', or 'Synopsis' sections and may be labeled as 'Study Design', 'Design Overview', or 'Design Summary'. Extract the paragraph or section that explains how the study is structured rather than detailed procedures or schedules."
+      },
+      "PrimaryObjectives": {
+        "type": "string",
+        "method": "extract",
+        "description": "Text describing the main goals of the study, usually focusing on efficacy, safety, or tolerability of the investigational product. Commonly found in the 'Objectives and Endpoints', 'Study Objectives', or 'Synopsis' sections under a heading such as 'Primary Objective' or 'Primary Objectives'. Extract the statement(s) that specify what the study is primarily designed to evaluate, not secondary or exploratory objectives."
+      },
+      "PrimaryEndpoints": {
+        "type": "string",
+        "method": "extract",
+        "description": "Description of the primary outcome measures used to assess the primary objectives of the study. Typically located in the 'Objectives and Endpoints', 'Outcome Measures', or 'Efficacy/Safety Endpoints' sections under a heading such as 'Primary Endpoints' or 'Primary Efficacy Endpoints'. Extract the complete definition of the primary endpoints, including the variable being measured, method of assessment, and timepoints when available."
+      },
+      "StudyTitle": {
+        "type": "string",
+        "method": "extract",
+        "description": "The main study title as it appears in protocol headers, footers, or metadata sections. Often matches the 'Protocol Title' or may be a shortened or formatted version labeled as 'Study Title', 'Short Title', or 'Abbreviated Title'. Extract the primary title text used to identify the study throughout the document, even if it differs slightly from the full cover-page title."
+      },
+      "StudyPhase": {
+        "type": "string",
+        "method": "extract",
+        "description": "Phase of clinical development represented by the study, such as Phase I, Phase II, Phase III, or Phase IV, including combined phases (for example, 'Phase 1/2'). Typically appears on the cover page, synopsis, or in the 'Study Design' or 'Study Overview' sections and may be labeled as 'Study Phase', 'Phase of Development', or 'Clinical Phase'. Extract the phase description exactly as written."
+      },
+      "StudyPopulationDescription": {
+        "type": "string",
+        "method": "extract",
+        "description": "High-level narrative describing the target participant population for the study. Often found in the 'Study Population', 'Study Overview', 'Synopsis', or 'Background and Rationale' sections. May be labeled as 'Target Population', 'Study Population', or 'Patient Population'. Extract the text that summarizes key characteristics such as disease or condition, age group, and other defining features of the participants."
+      },
+      "TotalParticipantCount": {
+        "type": "integer",
+        "method": "extract",
+        "description": "Total number of participants planned for enrollment in the study across all sites and arms. Commonly labeled as 'Planned Enrollment', 'Target Sample Size', 'Total Number of Subjects', or 'Number of Participants'. Typically appears in the synopsis, 'Study Design', or 'Sample Size' sections. Extract the numeric value representing the overall planned enrollment, not per-site or per-arm counts."
+      },
+      "StudyArms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "ArmTitle": {
+              "type": "string",
+              "method": "extract",
+              "description": "Name or label of the study arm, treatment group, or cohort. Usually found in the 'Study Design', 'Treatment Arms', or 'Intervention' sections and may be labeled as 'Arm', 'Cohort', 'Group', or 'Treatment Regimen'. Examples include 'Arm A: Investigational Drug + Standard of Care' or 'Placebo Control Arm'. Extract the full title of each arm."
+            },
+            "ArmDescription": {
+              "type": "string",
+              "method": "extract",
+              "description": "Detailed description of the interventions, dosing regimen, and key characteristics for the corresponding study arm. Typically appears under arm-specific headings in the 'Study Design', 'Treatment Plan', or 'Interventions' sections. May include drug name(s), dose, route of administration, frequency, treatment duration, and comparator details. Extract the full descriptive text associated with each arm."
+            }
+          },
+          "method": "generate"
+        },
+        "method": "generate",
+        "description": "Collection of all study arms, cohorts, or treatment groups defined in the protocol. Each item includes an arm title and arm description as specified in the 'Study Design', 'Treatment Arms', or 'Intervention' sections. Extract one entry per distinct arm or cohort."
+      },
+      "SponsorName": {
+        "type": "string",
+        "method": "extract",
+        "description": "Legal or corporate name of the organization serving as the study sponsor. Typically appears on the cover page, 'Sponsor Information' section, or headers and may be labeled as 'Sponsor', 'Study Sponsor', or 'Sponsor/Company'. Extract the full sponsor name (for example, 'Memorial Sloan Kettering Cancer Center' or a pharmaceutical company name) without including addresses or contact details.",
+        "estimateSourceAndConfidence": true
+      }
+    },
+    "definitions": {}
+  }
+}
