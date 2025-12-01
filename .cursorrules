@@ -1,0 +1,140 @@
+# Azure Content Understanding Schema - AI Assistant Guidelines
+
+## Project Context
+
+This repository contains a field schema configuration for **Microsoft Azure Content Understanding AI** (formerly Azure Form Recognizer) designed to extract structured data from **clinical trial protocol documents**.
+
+The schema file (`cu-project-4766_prebuilt-document_2025-11-01.json`) defines a custom analyzer that extracts key information from clinical trial protocols.
+
+## Best Practices for Field Descriptions
+
+When creating or modifying field descriptions in the JSON schema, **ALWAYS** follow these Azure Content Understanding best practices:
+
+### 1. Write Detailed Descriptions
+
+Field descriptions must be **clear, specific, and comprehensive**. Include:
+
+- **Location hints**: Where in the document the field typically appears
+- **Format expectations**: Expected format or structure of the data
+- **Alternative labels**: All possible names/aliases for the field
+- **Context clues**: Surrounding text or sections that help identify the field
+
+**Example from this schema:**
+```json
+"ProtocolNumber": {
+  "description": "Unique identifier assigned to the protocol by the sponsor for tracking and regulatory reference. Commonly labeled as 'Protocol No.', 'Protocol Number', or 'Study ID' and found on the cover page, headers, or footers next to the study title and sponsor name. Extract the full identifier including letters, numbers, and punctuation (for example, 'ABC-1234-001')."
+}
+```
+
+### 2. Include All Aliases
+
+List **all possible names** for each field, especially when working with diverse document templates. This helps the model recognize the field regardless of labeling variations.
+
+**Good example:**
+```
+"May be labeled as 'Protocol Title', 'Full Title', 'Official Title', or 'Study Title'."
+```
+
+**Better example (more comprehensive):**
+```
+"Commonly labeled as 'Protocol No.', 'Protocol Number', or 'Study ID' and found on the cover page, headers, or footers next to the study title and sponsor name."
+```
+
+### 3. Use Affirmative Language
+
+**ALWAYS** describe what the field **IS**, not what it isn't. Positive descriptions are clearer and more effective.
+
+**❌ BAD (negative language):**
+```
+"This field isn't the invoice date and not the due date."
+```
+
+**✅ GOOD (affirmative language):**
+```
+"The date when goods or services were delivered, found in the delivery information section."
+```
+
+**Example from this schema:**
+```
+"Date of the current protocol version, indicating when this version was finalized, approved, or amended. Usually appears on the cover page or in the document header near the protocol number and version (for example, 'Version 3.0, 15 March 2024'). May be labeled as 'Version Date', 'Protocol Date', or 'Effective Date'. Extract the date associated with the active protocol version, not planned or historical dates."
+```
+
+### 4. Structure Guidelines
+
+When writing descriptions, follow this structure:
+
+1. **What it is**: Clear definition of the field
+2. **Where to find it**: Document sections, locations, or context
+3. **How it's labeled**: All possible labels/aliases
+4. **Format/Examples**: Expected format with concrete examples
+5. **Edge cases**: What to include/exclude, if applicable
+
+### 5. Clinical Trial Protocol Specifics
+
+For this schema, remember:
+- Protocol documents have standardized sections but vary in formatting
+- Fields may appear in multiple locations (cover page, synopsis, detailed sections)
+- Some fields are optional (e.g., AmendmentNumber, USINDNumber)
+- Dates may appear in various formats
+- Study arms and assessments may be in tables or narrative text
+
+## When Modifying This Schema
+
+### Adding New Fields
+
+1. **Alphabetize** the field name in the `fields` object
+2. **Write a comprehensive description** following all best practices above
+3. **Choose appropriate type**: `string`, `date`, `integer`, `array`, or `object`
+4. **Set method**: Use `"extract"` for direct extraction, `"generate"` for derived/computed fields
+5. **Include examples** in the description when helpful
+
+### Improving Existing Descriptions
+
+When asked to improve field descriptions:
+
+1. **Review** the current description
+2. **Enhance** with more location hints if missing
+3. **Add** more aliases/labels if the list is incomplete
+4. **Clarify** format expectations with examples
+5. **Convert** any negative language to affirmative
+6. **Maintain** the existing structure and style
+
+### Example Improvement
+
+**Before:**
+```json
+"description": "The protocol number."
+```
+
+**After:**
+```json
+"description": "Unique identifier assigned to the protocol by the sponsor for tracking and regulatory reference. Commonly labeled as 'Protocol No.', 'Protocol Number', or 'Study ID' and found on the cover page, headers, or footers next to the study title and sponsor name. Extract the full identifier including letters, numbers, and punctuation (for example, 'ABC-1234-001')."
+```
+
+## Reference
+
+- **Azure Content Understanding Best Practices**: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/best-practices?source=recommendations
+- **Base Analyzer**: `prebuilt-document`
+- **Document Type**: Clinical trial protocol documents
+
+## Key Principles Summary
+
+✅ **DO:**
+- Write detailed, specific descriptions
+- Include location hints and format expectations
+- List all possible aliases/labels
+- Use affirmative language
+- Provide concrete examples
+- Describe what the field IS
+
+❌ **DON'T:**
+- Use vague or generic descriptions
+- Describe what the field ISN'T
+- Skip location or format information
+- Use negative language
+- Assume the model knows clinical trial terminology without context
+
+---
+
+**Remember**: The quality of field descriptions directly impacts extraction accuracy. Take time to write comprehensive, clear descriptions that guide the model effectively.
+

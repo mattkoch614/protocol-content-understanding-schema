@@ -80,7 +80,7 @@
       "ScheduleOfAssessments": {
         "type": "array",
         "method": "extract",
-        "description": "A structured, visit-by-visit breakdown of all assessments, designed to capture data from both standard tables (like Pfizer-1) and modular/fragmented appendix sections (like Astra-1). Each item represents a distinct visit or visit group.",
+        "description": "A structured, visit-by-visit breakdown of all assessments, designed to capture data from both standard tables and modular/fragmented appendix sections. Each item represents a distinct visit or visit group.",
         "items": {
           "type": "object",
           "properties": {
