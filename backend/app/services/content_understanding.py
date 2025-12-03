@@ -86,7 +86,7 @@ class ContentUnderstandingService:
             async with httpx.AsyncClient(timeout=300.0) as client:
                 # Submit document for analysis
                 # Azure Content Understanding expects JSON with file URL
-                print(f"🚀 Sending POST request to Azure...")
+                print("🚀 Sending POST request to Azure...")
                 
                 response = await client.post(
                     analyze_url,
@@ -121,8 +121,16 @@ class ContentUnderstandingService:
                 # Poll for results
                 result = await self._poll_for_result(client, operation_location)
                 
-                # Parse and return the extracted fields
-                return self._parse_analysis_result(document_id, result)
+                print("✅ Got result from Azure!")
+                logging.info(f"Azure result: {result}")
+                
+                # Return the raw Azure response
+                return DocumentAnalysisResponse(
+                    document_id=document_id,
+                    fields=[],  # Not using structured fields for now
+                    status="success",
+                    raw_result=result  # Include the full Azure response
+                )
             
         except httpx.HTTPStatusError as e:
             error_detail = e.response.text if hasattr(e.response, 'text') else str(e)

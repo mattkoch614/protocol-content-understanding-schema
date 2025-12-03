@@ -34,6 +34,7 @@ class DocumentAnalysisResponse(BaseModel):
     fields: List[ExtractedField] = Field(default_factory=list, description="Extracted fields")
     status: str = Field(..., description="Analysis status")
     error_message: Optional[str] = Field(None, description="Error message if analysis failed")
+    raw_result: Optional[Dict[str, Any]] = Field(None, description="Raw response from Azure Content Understanding")
 
 
 class ProtocolMetadata(BaseModel):
