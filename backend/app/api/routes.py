@@ -1,6 +1,7 @@
 """
 API route definitions.
 """
+import logging
 from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
 from typing import Optional
 
@@ -59,7 +60,15 @@ async def analyze_document(
     """
     try:
         # Read file content
+        print(f"📄 Received file upload: {file.filename}")
+        print(f"📄 File content type: {file.content_type}")
+        logging.info(f"Received file upload: {file.filename}")
+        logging.info(f"File content type: {file.content_type}")
+        
         content = await file.read()
+        
+        print(f"📄 Read {len(content)} bytes from uploaded file")
+        logging.info(f"Read {len(content)} bytes from uploaded file")
         
         # Process document
         result = await content_understanding_service.analyze_document(
